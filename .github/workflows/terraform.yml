@@ -3,8 +3,9 @@ name: 'Terraform CI/CD'
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -39,7 +40,7 @@ jobs:
         run: terraform plan -no-color
         if: github.event_name == 'pull_request'
         
-      # Only apply changes automatically when code is pushed to the 'main' branch
+      # Only apply changes automatically when code is pushed to the 'master' branch
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
