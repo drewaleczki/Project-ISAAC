@@ -21,8 +21,39 @@ In this platform, we apply practices demanded by the market (and by certificatio
 - **Distributed Processing:** PySpark via AWS Glue
 - **Analytics Engineering & Quality:** dbt (Data Build Tool)
 - **Serving Layer:** Amazon Athena
+- **Orchestration:** AWS Step Functions + EventBridge Scheduler
 - **Infrastructure as Code (IaC):** Terraform
 - **CI/CD:** GitHub Actions (Automated Deployment focused on DevOps)
+
+## 🏛️ Architecture Decisions
+
+This section documents the key design rationale driving this platform's architecture — the kind of decisions that separate a production-grade system from an academic exercise.
+
+### dbt vs. Gold Refresher Lambda: Two Tools, Two Responsibilities
+
+One of the most nuanced design patterns in this project is the intentional **dual-layer approach** to Gold table materialization:
+
+| Layer | Tool | Trigger | Purpose |
+|---|---|---|---|
+| **Deployment** | `dbt-core` (GitHub Actions) | `git push` to `master` | Validates SQL logic, enforces Data Contracts (`not_null`, `unique`), and initializes Gold tables on first deploy |
+| **Scheduling** | Gold Refresher Lambda (Step Functions) | Daily cron via EventBridge | Re-executes the same Athena CTAS queries to refresh Gold data with newly ingested records — zero infrastructure required |
+
+**Why not run dbt daily?** Running `dbt-core` on a schedule would require either a dedicated EC2 instance (~$15-30/month) or a containerized ECS task — both breaking the project's FinOps-first principle. The Gold Refresher Lambda executes equivalent SQL via `boto3` + `Athena StartQueryExecution` for fractions of a cent per run.
+
+**The architect's metaphor:** dbt is the *architect* — it draws the blueprints, enforces quality standards, and builds the structure initially. The Lambda is the *caretaker* — it refreshes the data daily without re-validating the entire structure.
+
+### Airflow vs. AWS Step Functions
+
+The original roadmap referenced Apache Airflow for orchestration. After evaluating the trade-offs, **AWS Step Functions** was selected:
+
+| Dimension | Apache Airflow (MWAA/EC2) | AWS Step Functions |
+|---|---|---|
+| Infrastructure | Always-on server required | 100% Serverless |
+| Cost | ~$15-30/month (idle time) | ~$0.09/month (pay per state transition) |
+| Visual DAG | Airflow UI | Native AWS Console |
+| AWS Integration | Operators + plugins | Native SDK (Lambda, Glue, SNS) |
+
+Step Functions delivers the same visual DAG and error-handling capabilities while remaining fully aligned with the project's Serverless and FinOps principles.
 
 ## 🗺️ Step-by-Step Execution Plan
 

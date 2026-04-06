@@ -15,3 +15,9 @@ variable "kaggle_key" {
   type        = string
   sensitive   = true
 }
+
+variable "alert_email" {
+  description = "Email address that receives SNS pipeline failure notifications."
+  type        = string
+  sensitive   = true
+}
