@@ -1,4 +1,4 @@
-# Project ISAAC 🚀
+﻿# Project ISAAC 🚀
 
 While awaiting the arrival of my son, Isaac, I decided to name my new data architecture project in his honor.
 
@@ -167,4 +167,5 @@ When substituting dbt scheduling with an automated `boto3` Athena-based Python L
 
 **Resolution:**
 Elevated the IAM Role boundaries via Terraform to explicitly authorize native AWS Glue DDL metadata manipulation and broadened S3 boundaries (`arn:aws:s3:::*`) to safely allow the Serverless query engine to distribute execution data seamlessly.
+
 
