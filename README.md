@@ -1,4 +1,4 @@
-# Project ISAAC 🚀
+﻿# Project ISAAC 🚀
 
 While awaiting the arrival of my son, Isaac, I decided to name my new data architecture project in his honor.
 
@@ -118,6 +118,23 @@ The core skills targeted during the coding of this project are:
 ---
 > *“If I have seen further it is by standing on the shoulders of Giants.” — Isaac Newton*
 
+
+## 💰 FinOps: Enterprise Cost Extrapolation
+
+While Project ISAAC operates on a Kaggle dataset designed to fit within the AWS Free Tier, the architecture was intentionally designed using pure **Serverless Pay-Per-Use** models. If a mid-sized company deployed this exact pipeline to process **500 GB of new data per month** (running the pipeline daily), the unit economics would theoretically scale as follows:
+
+| Infrastructure Layer | AWS Service | Pricing Metric | Extrapolated Monthly Cost |
+|---|---|---|---|
+| **Storage (Data Lake)** | Amazon S3 | 500 GB (Active Standard Tier) | ~ $11.50 |
+| **Bronze Ingestion** | AWS Lambda | 30 daily runs (300 sec duration) | ~ ## ⚠️ Troubleshooting & Gotchas.10 |
+| **Silver Processing** | AWS Glue (PySpark) | 10 DPUs running 30 hours/month | ~ $132.00 |
+| **Gold Aggregation** | Amazon Athena | Scanning 3 TB/month (Parquet optimized) | ~ $15.00 |
+| **Orchestration** | AWS Step Functions | 300 state transitions/month | ~ ## ⚠️ Troubleshooting & Gotchas.00 |
+| **GitOps/CI-CD** | GitHub Actions | 120 deployment minutes | ~ ## ⚠️ Troubleshooting & Gotchas.00 |
+| **Total** | | | **~ $158.60 / month** |
+
+> **The Architectural Impact:** A traditional architecture hosting an always-on Apache Airflow cluster (EC2), a persistent Spark Master Node (EMR), and a continuous Data Warehouse instance (e.g., Redshift/Snowflake) would cost upwards of ** - ,500/month** just to keep the servers turned on, even if zero data was processed. Project ISAAC drops this baseline to **** when idle, scaling purely linearly with data volume.
+
 ## ⚠️ Troubleshooting & Gotchas
 
 Real-world Cloud Engineering is paved with platform nuances. Below are documented anomalies faced during the architectural build of Project ISAAC and their respective resolutions.
@@ -145,3 +162,4 @@ When substituting dbt scheduling with an automated `boto3` Athena-based Python L
 
 **Resolution:**
 Elevated the IAM Role boundaries via Terraform to explicitly authorize native AWS Glue DDL metadata manipulation and broadened S3 boundaries (`arn:aws:s3:::*`) to safely allow the Serverless query engine to distribute execution data seamlessly.
+
