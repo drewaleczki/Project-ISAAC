@@ -91,6 +91,7 @@ resource "aws_glue_job" "bronze_to_silver" {
     "--enable-job-insights"              = "true"
     "--enable-metrics"                   = "true"
     "--enable-continuous-cloudwatch-log" = "true"
+    "--enable-glue-datacatalog"          = "true"
   }
 
   execution_property {
