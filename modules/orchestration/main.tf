@@ -49,11 +49,17 @@ resource "aws_iam_role_policy" "gold_refresher_policy" {
       {
         # S3: Read Silver source data and write Gold output + staging results
         Effect = "Allow"
-        Action = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"]
-        Resource = [
-          "arn:aws:s3:::${var.gold_bucket_name}",
-          "arn:aws:s3:::${var.gold_bucket_name}/*"
+        Action = [
+          "s3:GetBucketLocation",
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:ListBucketMultipartUploads",
+          "s3:ListMultipartUploadParts",
+          "s3:AbortMultipartUpload",
+          "s3:PutObject",
+          "s3:DeleteObject"
         ]
+        Resource = ["arn:aws:s3:::*"]
       },
       {
         # Glue: Read Silver catalog metadata for Athena query resolution
