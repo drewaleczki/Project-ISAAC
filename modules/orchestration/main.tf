@@ -62,9 +62,16 @@ resource "aws_iam_role_policy" "gold_refresher_policy" {
         Resource = ["arn:aws:s3:::*"]
       },
       {
-        # Glue: Read Silver catalog metadata for Athena query resolution
+        # Glue: Read Silver catalog metadata and manage Gold table schemas (CTAS & DROP)
         Effect   = "Allow"
-        Action   = ["glue:GetTable", "glue:GetDatabase", "glue:GetPartitions"]
+        Action   = [
+          "glue:GetTable",
+          "glue:GetDatabase",
+          "glue:GetPartitions",
+          "glue:CreateTable",
+          "glue:UpdateTable",
+          "glue:DeleteTable"
+        ]
         Resource = "*"
       },
       {
@@ -123,7 +130,12 @@ resource "aws_iam_role_policy" "step_functions_policy" {
       },
       {
         Effect   = "Allow"
-        Action   = ["glue:StartJobRun", "glue:GetJobRun", "glue:StopJobRun"]
+        Action   = ["glue:StartJobRun", "glue:GetJobRun", "glue:GetJobRuns", "glue:BatchStopJobRun"]
+        Resource = "*"
+      },
+      {
+        Effect   = "Allow"
+        Action   = ["events:PutTargets", "events:PutRule", "events:DescribeRule"]
         Resource = "*"
       },
       {
