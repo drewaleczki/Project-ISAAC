@@ -41,9 +41,19 @@ module "ingestion_lambda" {
   project_name = "project-isaac"
   environment  = "dev"
 
-  # A integração entre módulos! A bucket criada acima alimenta a lambda abaixo:
+  # Module integration! The bucket provisioned above feeds the lambda below:
   bronze_bucket_name = module.s3_datalake.bronze_bucket_id
 
   kaggle_username = var.kaggle_username
   kaggle_key      = var.kaggle_key
+}
+
+module "glue_processing" {
+  source = "./modules/glue_processing"
+
+  project_name = "project-isaac"
+  environment  = "dev"
+
+  bronze_bucket_name = module.s3_datalake.bronze_bucket_id
+  silver_bucket_name = module.s3_datalake.silver_bucket_id
 }

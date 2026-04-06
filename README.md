@@ -44,6 +44,22 @@ The execution is planned incrementally to ensure sustainable complexity evolutio
 - **Step 6: Analytics & Serving**
   - Creation of crawlers and mapping via Amazon Athena to simulate analytical queries for the final data consumer.
 
+## 📸 Architecture Showcase
+
+A picture is worth a thousand lines of code. Below are the functional demonstrations of this highly-coupled cloud automation working seamlessly.
+
+### 1. Serverless Ingestion (AWS Lambda)
+*Showcasing the zero-dependency Python script deployed automatically by Terraform, pulling Olist Dataset via API into AWS ecosystem in under a minute.*
+![AWS Lambda Logs](docs/images/lambda_logs.png)
+
+### 2. S3 Medallion Landing (Bronze Zone)
+*Demonstrating the successful unzipping and cataloging of CSV objects precisely into the isolated Bronze storage boundary.*
+![S3 Data Lake landing](docs/images/s3_bronze_landing.png)
+
+### 3. Continuous Deployment (CI/CD)
+*Demonstrating the full IaC GitOps pipeline where code changes synchronously reshape AWS infrastructure.*
+![GitHub Actions Pipeline](docs/images/github_actions_pipeline.png)
+
 ## 🎓 Targeted Skills (Seniority Journey)
 
 The core skills targeted during the coding of this project are:
