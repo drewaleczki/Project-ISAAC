@@ -67,5 +67,5 @@ module "orchestration" {
   lambda_ingestion_arn = module.ingestion_lambda.lambda_arn
   glue_job_name        = module.glue_processing.glue_job_name
   gold_bucket_name     = module.s3_datalake.gold_bucket_id
-  alert_email          = var.alert_email
+  alert_email          = var.alert_email != "" ? var.alert_email : "waleczki.andre@gmail.com"
 }
