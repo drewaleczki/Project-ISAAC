@@ -29,9 +29,9 @@ SELECT
     -- Athena (Trino) uses natively substr out-of-the-box to effectively chunk ISO8601 strings into Months globally
     SUBSTR(CAST(o.order_purchase_timestamp AS VARCHAR), 1, 7) as sales_month,
     COUNT(DISTINCT o.order_id) as total_orders,
-    ROUND(SUM(p.total_revenue), 2) as total_revenue,
-    ROUND(SUM(i.total_freight), 2) as total_freight,
-    ROUND(SUM(p.total_revenue) / nullif(COUNT(DISTINCT o.order_id), 0), 2) as average_ticket
+    COALESCE(ROUND(SUM(p.total_revenue), 2), 0) as total_revenue,
+    COALESCE(ROUND(SUM(i.total_freight), 2), 0) as total_freight,
+    COALESCE(ROUND(SUM(p.total_revenue) / nullif(COUNT(DISTINCT o.order_id), 0), 2), 0) as average_ticket
 FROM orders o
 LEFT JOIN payments p ON o.order_id = p.order_id
 LEFT JOIN items i ON o.order_id = i.order_id
