@@ -134,3 +134,14 @@ default_arguments = {
 ```
 This forces the Spark clusters to sync with the permanent AWS Glue Data Catalog infrastructure seamlessly.
 
+
+### Step Functions Orchestration (InvalidRequestException & AccessDeniedException)
+When substituting dbt scheduling with an automated `boto3` Athena-based Python Lambda (Gold Refresher), executing `DROP TABLE` and `CREATE TABLE AS SELECT` (CTAS) requires a much broader set of IAM permissions than a standard query.
+
+**Common Errors Encountered:**
+1. `Unable to verify/create output bucket project-isaac-dev-gold`: Athena requires `s3:GetBucketLocation` and broad multipart upload privileges (`s3:ListMultipartUploadParts`) on the output target, not just explicit `s3:GetObject/PutObject` actions.
+2. `AccessDeniedException: glue:DeleteTable`: Dropping an Athena table logically delegates to the AWS Glue Data Catalog. The IAM Role requires explicit `glue:DeleteTable`, `glue:CreateTable`, and `glue:UpdateTable` to execute DDL statements.
+3. `Step Functions Error: The resource provided arn:aws:states:::glue:startJobRun.sync:2 is not recognized`: Unlike standard server-based synchronous integrations, the AWS Glue Step Functions native integration strictly requires `.sync` (not `.sync:2`). Additionally, EventBridge `events:PutTargets` rules govern the behind-the-scenes state tracking.
+
+**Resolution:**
+Elevated the IAM Role boundaries via Terraform to explicitly authorize native AWS Glue DDL metadata manipulation and broadened S3 boundaries (`arn:aws:s3:::*`) to safely allow the Serverless query engine to distribute execution data seamlessly.
