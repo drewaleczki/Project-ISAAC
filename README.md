@@ -1,18 +1,40 @@
-﻿# Project ISAAC 🚀
+# Project ISAAC 🚀
 
-While awaiting the arrival of my son, Isaac, I decided to name my new data architecture project in his honor.
+## Overview
 
-**Project ISAAC** is an End-to-End data platform on AWS, focused on solving real-world challenges in scalability and software engineering applied to data. The choice of the name reflects precision and the force of expected impact — echoing both the principles of Isaac Newton and my journey into fatherhood.
+**End-to-End Serverless Data Platform on AWS** designed to process large-scale datasets with a FinOps-first architecture, leveraging S3, Glue, Athena, dbt, Terraform, and Step Functions.
+
+Architecture designed to:
+- minimize infrastructure cost
+- ensure data quality
+- scale automatically
+- operate fully serverless
+
+---
+
+While awaiting the arrival of my son, Isaac, I decided to name my new data architecture project in his honor. **Project ISAAC** is focused on solving real-world challenges in scalability and software engineering applied to data. The choice of the name reflects precision and the force of expected impact — echoing both the principles of Isaac Newton and my journey into fatherhood.
 
 ## 🎯 Project Rationale & Market Opportunity
 
-This project was born out of the consolidation of my profile as a **Senior Data Engineer**. The focus is no longer just writing scripts to move data, but **designing Scalable Architectures** and minimizing human intervention through automation and software engineering.
+This project was **designed to simulate real-world Senior-level architecture decisions**. The focus is no longer just writing scripts to move data, but **designing Scalable Data Platforms** and minimizing human intervention through automation and software engineering.
 
 In this platform, we apply practices demanded by the market (and by certifications such as *AWS Certified Data Engineer*), consolidating:
 - Native Cloud Integration (AWS Ecosystem via IAM).
 - Stable Processing for Big Data.
 - Quality and Consistency (Data Contracts).
 - Self-managed Infrastructure (DevOps and FinOps).
+
+## 💡 What this project demonstrates
+
+- **End-to-End Data Engineering**
+- **AWS Serverless Architecture**
+- **Infrastructure as Code (IaC)**
+- **FinOps optimization**
+- **Data Quality with dbt**
+- **Big Data Processing with PySpark**
+- **Event-driven orchestration**
+- **Production-grade IAM security**
+- **CI/CD for Data Platforms**
 
 ## 🛠️ Technology Stack
 
@@ -24,6 +46,13 @@ In this platform, we apply practices demanded by the market (and by certificatio
 - **Orchestration:** AWS Step Functions + EventBridge Scheduler
 - **Infrastructure as Code (IaC):** Terraform
 - **CI/CD:** GitHub Actions (Automated Deployment focused on DevOps)
+
+## 🗺️ Architecture Diagram
+
+![Architecture Diagram](docs/images/architecture_diagram.png)
+
+**Pipeline:**
+AWS Lambda → S3 Bronze → AWS Glue → S3 Silver → Amazon Athena → dbt → Gold Layer → AWS Step Functions
 
 ## 🏛️ Architecture Decisions
 
@@ -55,9 +84,9 @@ The original roadmap referenced Apache Airflow for orchestration. After evaluati
 
 Step Functions delivers the same visual DAG and error-handling capabilities while remaining fully aligned with the project's Serverless and FinOps principles.
 
-## 🗺️ Step-by-Step Execution Plan
+## 📍 Step-by-Step Execution Plan
 
-The execution is planned incrementally to ensure sustainable complexity evolution:
+The execution was planned incrementally to ensure sustainable complexity evolution:
 
 - **Step 1: Terraform Foundation (Completed) ✔️**
   - Initial implementation of Infrastructure as Code (IaC).
@@ -73,49 +102,39 @@ The execution is planned incrementally to ensure sustainable complexity evolutio
 - **Step 5: Orchestration & Analytics Engineering (dbt + Athena + Step Functions) (Completed) ✔️**
   - GitOps-driven Serverless pipeline leveraging `dbt-core` over GitHub Actions Ubuntu runners.
   - Transformation of Silver tables into C-Level Business models (Gold Layer KPIs).
-  - Validation via `schema.yml` contracts ensuring zero degradation over aggregations natively queried by Amazon Athena.
-
+  - Autonomous Orchestration via AWS Step Functions integrating PySpark and the Gold Refresher Lambda.
 
 ## 📸 Architecture Showcase
 
 A picture is worth a thousand lines of code. Below are the functional demonstrations of this highly-coupled cloud automation working seamlessly.
 
-### 1. Serverless Ingestion (AWS Lambda)
+### 1. Step Functions DAG Success
+*Fully Serverless Data Pipeline orchestrated via AWS Step Functions (Event-Driven execution of Lambda, Glue, and Athena).*
+![AWS Step Functions DAG Success](docs/images/step_functions_dag_success.png)
+
+### 2. Serverless Ingestion (AWS Lambda)
 *Showcasing the zero-dependency Python script deployed automatically by Terraform, pulling Olist Dataset via API into AWS ecosystem in under a minute.*
 ![AWS Lambda Logs](docs/images/lambda_logs.png)
 
-### 2. S3 Medallion Landing (Bronze Zone)
+### 3. S3 Medallion Landing (Bronze Zone)
 *Demonstrating the successful unzipping and cataloging of CSV objects precisely into the isolated Bronze storage boundary.*
 ![S3 Data Lake landing](docs/images/s3_bronze_landing.png)
 
-### 3. Continuous Deployment (CI/CD)
+### 4. Continuous Deployment (CI/CD)
 *Demonstrating the full IaC GitOps pipeline where code changes synchronously reshape AWS infrastructure.*
 ![GitHub Actions Pipeline](docs/images/github_actions_pipeline.png)
 
-### 4. Distributed Processing (PySpark via AWS Glue)
+### 5. Distributed Processing (PySpark via AWS Glue)
 *Scaling compute horizontally across dual-node Spark architectures (G.1X FinOps cluster) to standardize datatypes and apply DAG execution.*
 ![AWS Glue Execution](docs/images/glue_pyspark_execution.png)
 
-### 5. Silver Layer Optimization (Parquet)
+### 6. Silver Layer Optimization (Parquet)
 *Showcasing the analytical optimization in the Data Lake. Raw CSVs successfully cast, compressed via Snappy, and landed as partitionable Parquet objects.*
 ![S3 Silver Storage](docs/images/s3_silver_parquet.png)
 
-### 6. Relational Metastore (AWS Glue Catalog)
+### 7. Relational Metastore (AWS Glue Catalog)
 *Dynamic discovery generating strict schema contracts. Flat files parsed into searchable SQL tables bounded into the `isaac_silver` database.*
 ![AWS Glue Data Catalog](docs/images/glue_data_catalog.png)
-
-## 🎓 Targeted Skills (Seniority Journey)
-
-The core skills targeted during the coding of this project are:
-
-1. **Connected AWS Ecosystem:** Optimizing the native relationship between Glue, S3, Lake Formation, Athena, and restrictive IAM Roles (Least Privilege).
-2. **True Big Data:** Orchestrating large-scale Jobs with PySpark, managing efficient partitioning (.parquet / .iceberg).
-3. **Data Quality as Code:** End-to-end use of dbt to build reliable Data Contracts and ensure a "Shift-left" architecture quality.
-4. **Applied DevOps / SysAdmin:** Practical mastery of Terraform (clickless provisioning on the AWS Console) and CI/CD pipeline integration (CI via GitHub Actions).
-5. **FinOps:** Documenting cost control for Serverless architecture choices (AWS pay-per-use) in every module.
-
----
-> *“If I have seen further it is by standing on the shoulders of Giants.” — Isaac Newton*
 
 
 ## 💰 FinOps: Enterprise Cost Extrapolation
@@ -134,11 +153,6 @@ While Project ISAAC operates on a Kaggle dataset designed to fit within the AWS 
 
 > **The Architectural Impact:** A traditional architecture hosting an always-on Apache Airflow cluster (EC2), a persistent Spark Master Node (EMR), and a continuous Data Warehouse instance (e.g., Redshift/Snowflake) would cost upwards of **$800 - $1,500/month** just to keep the servers turned on, even if zero data was processed. Project ISAAC drops this baseline to **$0.00** when idle, scaling purely linearly with data volume.
 
-## 📸 Architecture Showcase
-
-![AWS Step Functions DAG Success](docs/images/step_functions_dag_success.png)
-*Fully Serverless Data Pipeline orchestrated via AWS Step Functions (Event-Driven execution of Lambda, Glue, and Athena).*
-
 ## ⚠️ Troubleshooting & Gotchas
 
 Real-world Cloud Engineering is paved with platform nuances. Below are documented anomalies faced during the architectural build of Project ISAAC and their respective resolutions.
@@ -155,7 +169,6 @@ default_arguments = {
 ```
 This forces the Spark clusters to sync with the permanent AWS Glue Data Catalog infrastructure seamlessly.
 
-
 ### Step Functions Orchestration (InvalidRequestException & AccessDeniedException)
 When substituting dbt scheduling with an automated `boto3` Athena-based Python Lambda (Gold Refresher), executing `DROP TABLE` and `CREATE TABLE AS SELECT` (CTAS) requires a much broader set of IAM permissions than a standard query.
 
@@ -167,6 +180,9 @@ When substituting dbt scheduling with an automated `boto3` Athena-based Python L
 **Resolution:**
 Elevated the IAM Role boundaries via Terraform to explicitly authorize native AWS Glue DDL metadata manipulation and broadened S3 boundaries (`arn:aws:s3:::*`) to safely allow the Serverless query engine to distribute execution data seamlessly.
 
+---
+> *“If I have seen further it is by standing on the shoulders of Giants.” — Isaac Newton*
 
+## 🤝 Feedback and Contributions
 
-
+Open to suggestions, discussions, and improvements. Feel free to open issues or contribute to the evolution of this data architecture!
