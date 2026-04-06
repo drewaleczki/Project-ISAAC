@@ -60,6 +60,18 @@ A picture is worth a thousand lines of code. Below are the functional demonstrat
 *Demonstrating the full IaC GitOps pipeline where code changes synchronously reshape AWS infrastructure.*
 ![GitHub Actions Pipeline](docs/images/github_actions_pipeline.png)
 
+### 4. Distributed Processing (PySpark via AWS Glue)
+*Scaling compute horizontally across dual-node Spark architectures (G.1X FinOps cluster) to standardize datatypes and apply DAG execution.*
+![AWS Glue Execution](docs/images/glue_pyspark_execution.png)
+
+### 5. Silver Layer Optimization (Parquet)
+*Showcasing the analytical optimization in the Data Lake. Raw CSVs successfully cast, compressed via Snappy, and landed as partitionable Parquet objects.*
+![S3 Silver Storage](docs/images/s3_silver_parquet.png)
+
+### 6. Relational Metastore (AWS Glue Catalog)
+*Dynamic discovery generating strict schema contracts. Flat files parsed into searchable SQL tables bounded into the `isaac_silver` database.*
+![AWS Glue Data Catalog](docs/images/glue_data_catalog.png)
+
 ## 🎓 Targeted Skills (Seniority Journey)
 
 The core skills targeted during the coding of this project are:
@@ -72,3 +84,19 @@ The core skills targeted during the coding of this project are:
 
 ---
 > *“If I have seen further it is by standing on the shoulders of Giants.” — Isaac Newton*
+
+## ⚠️ Troubleshooting & Gotchas
+
+Real-world Cloud Engineering is paved with platform nuances. Below are documented anomalies faced during the architectural build of Project ISAAC and their respective resolutions.
+
+### AWS Glue 4.0: `AnalysisException: Database not found`
+When programming pure PySpark logic leveraging `.saveAsTable(db.table)` and submitting it to AWS Glue, the Spark engine natively boots utilizing an isolated, ephemeral Hive Metastore stored in temporary memory. Consequentially, it will crash stating the Terraform-created database catalogs (e.g., `isaac_silver`) do not exist.
+
+**Resolution:**
+The cluster's execution parameters must explicitly intercept the SparkSession builder. In Terraform, ensure the `aws_glue_job` resource allocates the targeted argument to override this behavior:
+```hcl
+default_arguments = {
+  "--enable-glue-datacatalog" = "true"
+}
+```
+This forces the Spark clusters to sync with the permanent AWS Glue Data Catalog infrastructure seamlessly.
