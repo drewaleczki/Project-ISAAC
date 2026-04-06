@@ -37,12 +37,14 @@ The execution is planned incrementally to ensure sustainable complexity evolutio
 - **Step 3: Ingestion & Raw Data Simulation (Completed) ✔️**
   - Fetching the massive **Olist Brazilian E-commerce** dataset (combining customers, orders, payments, reviews, and products). *(Data is licensed under [CC BY-NC-SA 4.0](DATASET_LICENSE.md))*
   - 100% Cloud-Native AWS Lambda ingestion pipeline that fetches via API and pushes directly into the Bronze tier on S3 using Serverless infrastructure.
-- **Step 4: Distributed Processing with PySpark and AWS Glue 🚧**
+- **Step 4: Distributed Processing with PySpark and AWS Glue (Completed) ✔️**
   - Definition of properly orchestrated Glue Jobs without continuous dedicated servers.
-- **Step 5: dbt & Data Contracts**
-  - Creation of dbt models focused on quality testing to transform data into the Refined layer.
-- **Step 6: Analytics & Serving**
-  - Creation of crawlers and mapping via Amazon Athena to simulate analytical queries for the final data consumer.
+- **Step 5: Analytics Engineering & Data Contracts (dbt + Athena) (Completed) ??**
+  - GitOps-driven Serverless pipeline leveraging `dbt-core` over GitHub Actions Ubuntu runners.
+  - Transformation of Silver tables into C-Level Business models (Gold Layer KPIs).
+  - Validation via `schema.yml` contracts ensuring zero degradation over aggregations natively queried by Amazon Athena.
+- **Step 6: Business Intelligence & Serving ??**
+  - Surfacing the Gold analytical views in dynamic dashboards for final data consumers.
 
 ## 📸 Architecture Showcase
 
@@ -100,3 +102,4 @@ default_arguments = {
 }
 ```
 This forces the Spark clusters to sync with the permanent AWS Glue Data Catalog infrastructure seamlessly.
+

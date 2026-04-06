@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: isaac_silver
+    description: "Medallion Silver Layer - Optimized Parquet Olist Tables processed by PySpark."
+    database: isaac_silver
+    tables:
+      - name: olist_orders_dataset
+      - name: olist_order_items_dataset
+      - name: olist_order_payments_dataset
+      - name: olist_sellers_dataset
+      - name: olist_order_reviews_dataset
+
+models:
+  - name: gold_kpi_sales_monthly
+    description: "Aggregated analytical view exposing gross revenue streams and average ticket performance per month."
+    columns:
+      - name: sales_month
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
+
+  - name: gold_seller_performance
+    description: "Holistic performance analytical view focused on dimensional revenue logistics and review scores."
+    columns:
+      - name: seller_id
+        tests:
+          - not_null
+          - unique
