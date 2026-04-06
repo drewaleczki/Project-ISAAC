@@ -70,12 +70,11 @@ The execution is planned incrementally to ensure sustainable complexity evolutio
   - 100% Cloud-Native AWS Lambda ingestion pipeline that fetches via API and pushes directly into the Bronze tier on S3 using Serverless infrastructure.
 - **Step 4: Distributed Processing with PySpark and AWS Glue (Completed) ✔️**
   - Definition of properly orchestrated Glue Jobs without continuous dedicated servers.
-- **Step 5: Analytics Engineering & Data Contracts (dbt + Athena) (Completed) ??**
+- **Step 5: Orchestration & Analytics Engineering (dbt + Athena + Step Functions) (Completed) ✔️**
   - GitOps-driven Serverless pipeline leveraging `dbt-core` over GitHub Actions Ubuntu runners.
   - Transformation of Silver tables into C-Level Business models (Gold Layer KPIs).
   - Validation via `schema.yml` contracts ensuring zero degradation over aggregations natively queried by Amazon Athena.
-- **Step 6: Business Intelligence & Serving ??**
-  - Surfacing the Gold analytical views in dynamic dashboards for final data consumers.
+
 
 ## 📸 Architecture Showcase
 
@@ -167,5 +166,7 @@ When substituting dbt scheduling with an automated `boto3` Athena-based Python L
 
 **Resolution:**
 Elevated the IAM Role boundaries via Terraform to explicitly authorize native AWS Glue DDL metadata manipulation and broadened S3 boundaries (`arn:aws:s3:::*`) to safely allow the Serverless query engine to distribute execution data seamlessly.
+
+
 
 
