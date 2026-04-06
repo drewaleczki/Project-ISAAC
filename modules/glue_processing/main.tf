@@ -11,10 +11,10 @@ resource "aws_glue_catalog_database" "silver" {
 
 # 2. Dynamic S3 Infrastructure enabling Python Script deployment
 resource "aws_s3_object" "job_script" {
-  bucket      = var.silver_bucket_name
-  key         = "scripts/bronze_to_silver.py"
-  source      = "${path.root}/src/glue/bronze_to_silver.py"
-  
+  bucket = var.silver_bucket_name
+  key    = "scripts/bronze_to_silver.py"
+  source = "${path.root}/src/glue/bronze_to_silver.py"
+
   # Drives targeted infrastructure updates when detecting script source code local MD5 hash variances
   source_hash = filemd5("${path.root}/src/glue/bronze_to_silver.py")
 }
@@ -71,12 +71,12 @@ resource "aws_iam_role_policy" "s3_lake_access" {
 
 # 4. Orchestrating the Core AWS Glue Data Catalog Job Blueprint
 resource "aws_glue_job" "bronze_to_silver" {
-  name     = "${var.project_name}-bronze-to-silver-${var.environment}"
-  role_arn = aws_iam_role.glue_execution.arn
+  name         = "${var.project_name}-bronze-to-silver-${var.environment}"
+  role_arn     = aws_iam_role.glue_execution.arn
   glue_version = "4.0" # Maps functionally to target Engine: Spark 3.3 alongside Python 3.10 natively
-  
+
   # Strategic FinOps Policy: Clamping environment explicitly using minimal dual G.1X compute nodes bypassing massive default expenses 
-  worker_type = "G.1X"
+  worker_type       = "G.1X"
   number_of_workers = 2
 
   command {
@@ -85,11 +85,11 @@ resource "aws_glue_job" "bronze_to_silver" {
   }
 
   default_arguments = {
-    "--job-language"        = "python"
-    "--BRONZE_BUCKET"       = var.bronze_bucket_name
-    "--SILVER_BUCKET"       = var.silver_bucket_name
-    "--enable-job-insights" = "true"
-    "--enable-metrics"      = "true"
+    "--job-language"                     = "python"
+    "--BRONZE_BUCKET"                    = var.bronze_bucket_name
+    "--SILVER_BUCKET"                    = var.silver_bucket_name
+    "--enable-job-insights"              = "true"
+    "--enable-metrics"                   = "true"
     "--enable-continuous-cloudwatch-log" = "true"
   }
 
