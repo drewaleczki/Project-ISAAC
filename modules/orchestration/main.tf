@@ -156,8 +156,8 @@ resource "aws_sfn_state_machine" "pipeline" {
 
       ProcessSilver = {
         Type = "Task"
-        # .sync:2 native integration: Step Functions polls Glue automatically until job ends
-        Resource = "arn:aws:states:::glue:startJobRun.sync:2"
+        # .sync native integration: Step Functions polls Glue automatically until job ends
+        Resource = "arn:aws:states:::glue:startJobRun.sync"
         Parameters = {
           JobName = var.glue_job_name
         }
