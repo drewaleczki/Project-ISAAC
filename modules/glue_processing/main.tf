@@ -98,3 +98,8 @@ resource "aws_glue_job" "bronze_to_silver" {
     max_concurrent_runs = 1
   }
 }
+
+resource "aws_glue_catalog_database" "gold" {
+  name        = "isaac_gold"
+  description = "Database for C-Level Aggregations and dbt models (Athena Output)."
+}
