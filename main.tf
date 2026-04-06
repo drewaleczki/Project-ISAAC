@@ -34,3 +34,16 @@ module "s3_datalake" {
   project_name = "project-isaac"
   environment  = "dev"
 }
+
+module "ingestion_lambda" {
+  source = "./modules/ingestion_lambda"
+
+  project_name = "project-isaac"
+  environment  = "dev"
+
+  # A integração entre módulos! A bucket criada acima alimenta a lambda abaixo:
+  bronze_bucket_name = module.s3_datalake.bronze_bucket_id
+
+  kaggle_username = var.kaggle_username
+  kaggle_key      = var.kaggle_key
+}

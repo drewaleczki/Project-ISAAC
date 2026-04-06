@@ -32,13 +32,16 @@ The execution is planned incrementally to ensure sustainable complexity evolutio
   - Initial implementation of Infrastructure as Code (IaC).
   - AWS provider setup in an environment-agnostic way (uses Local Profile on desktop, and Secrets Injection [IAM OIDC/EnvVars] in GitHub Actions).
   - Base files, robust `.gitignore`, and this documentation.
-- **Step 2: Data Lake Storage Layer (S3 Layering) 🚧**
+- **Step 2: Data Lake Storage Layer (S3 Layering) (Completed) ✔️**
   - Terraform provisioning of S3 buckets organized into Raw (bronze), Trusted (silver), and Refined (gold).
-- **Step 3: Distributed Processing with PySpark and AWS Glue**
+- **Step 3: Ingestion & Raw Data Simulation (Completed) ✔️**
+  - Fetching the massive **Olist Brazilian E-commerce** dataset (combining customers, orders, payments, reviews, and products). *(Data is licensed under [CC BY-NC-SA 4.0](DATASET_LICENSE.md))*
+  - 100% Cloud-Native AWS Lambda ingestion pipeline that fetches via API and pushes directly into the Bronze tier on S3 using Serverless infrastructure.
+- **Step 4: Distributed Processing with PySpark and AWS Glue 🚧**
   - Definition of properly orchestrated Glue Jobs without continuous dedicated servers.
-- **Step 4: dbt & Data Contracts**
+- **Step 5: dbt & Data Contracts**
   - Creation of dbt models focused on quality testing to transform data into the Refined layer.
-- **Step 5: Analytics & Serving**
+- **Step 6: Analytics & Serving**
   - Creation of crawlers and mapping via Amazon Athena to simulate analytical queries for the final data consumer.
 
 ## 🎓 Targeted Skills (Seniority Journey)
