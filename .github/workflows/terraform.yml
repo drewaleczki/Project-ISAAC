@@ -19,6 +19,7 @@ jobs:
       AWS_REGION: ${{ vars.AWS_REGION }}
       TF_VAR_kaggle_username: ${{ secrets.KAGGLE_USERNAME }}
       TF_VAR_kaggle_key: ${{ secrets.KAGGLE_KEY }}
+      TF_VAR_alert_email: ${{ secrets.ALERT_EMAIL }}
 
     steps:
       - name: Checkout Code
