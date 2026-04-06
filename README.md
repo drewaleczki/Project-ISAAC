@@ -1,4 +1,4 @@
-﻿# Project ISAAC 🚀
+# Project ISAAC 🚀
 
 While awaiting the arrival of my son, Isaac, I decided to name my new data architecture project in his honor.
 
@@ -126,14 +126,19 @@ While Project ISAAC operates on a Kaggle dataset designed to fit within the AWS 
 | Infrastructure Layer | AWS Service | Pricing Metric | Extrapolated Monthly Cost |
 |---|---|---|---|
 | **Storage (Data Lake)** | Amazon S3 | 500 GB (Active Standard Tier) | ~ $11.50 |
-| **Bronze Ingestion** | AWS Lambda | 30 daily runs (300 sec duration) | ~ ## ⚠️ Troubleshooting & Gotchas.10 |
+| **Bronze Ingestion** | AWS Lambda | 30 daily runs (300 sec duration) | ~ $0.10 |
 | **Silver Processing** | AWS Glue (PySpark) | 10 DPUs running 30 hours/month | ~ $132.00 |
 | **Gold Aggregation** | Amazon Athena | Scanning 3 TB/month (Parquet optimized) | ~ $15.00 |
-| **Orchestration** | AWS Step Functions | 300 state transitions/month | ~ ## ⚠️ Troubleshooting & Gotchas.00 |
-| **GitOps/CI-CD** | GitHub Actions | 120 deployment minutes | ~ ## ⚠️ Troubleshooting & Gotchas.00 |
+| **Orchestration** | AWS Step Functions | 300 state transitions/month | ~ $0.00 |
+| **GitOps/CI-CD** | GitHub Actions | 120 deployment minutes | ~ $0.00 |
 | **Total** | | | **~ $158.60 / month** |
 
-> **The Architectural Impact:** A traditional architecture hosting an always-on Apache Airflow cluster (EC2), a persistent Spark Master Node (EMR), and a continuous Data Warehouse instance (e.g., Redshift/Snowflake) would cost upwards of ** - ,500/month** just to keep the servers turned on, even if zero data was processed. Project ISAAC drops this baseline to **** when idle, scaling purely linearly with data volume.
+> **The Architectural Impact:** A traditional architecture hosting an always-on Apache Airflow cluster (EC2), a persistent Spark Master Node (EMR), and a continuous Data Warehouse instance (e.g., Redshift/Snowflake) would cost upwards of **$800 - $1,500/month** just to keep the servers turned on, even if zero data was processed. Project ISAAC drops this baseline to **$0.00** when idle, scaling purely linearly with data volume.
+
+## 📸 Architecture Showcase
+
+![AWS Step Functions DAG Success](docs/images/step_functions_dag_success.png)
+*Fully Serverless Data Pipeline orchestrated via AWS Step Functions (Event-Driven execution of Lambda, Glue, and Athena).*
 
 ## ⚠️ Troubleshooting & Gotchas
 
