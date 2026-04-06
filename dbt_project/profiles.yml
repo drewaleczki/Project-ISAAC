@@ -7,8 +7,8 @@ isaac_analytics:
       database: isaac_gold
       schema: isaac_gold
       # Physical S3 boundary where analytical parquet entities reside
-      s3_data_dir: s3://{{ env_var('GOLD_BUCKET_NAME') }}/curated_models/
+      s3_data_dir: "s3://{{ env_var('GOLD_BUCKET_NAME') }}/curated_models/"
       # Temporary Athena operational staging workspace
-      s3_staging_dir: s3://{{ env_var('GOLD_BUCKET_NAME') }}/athena_query_results/
-      region_name: {{ env_var('AWS_REGION') }}
+      s3_staging_dir: "s3://{{ env_var('GOLD_BUCKET_NAME') }}/athena_query_results/"
+      region_name: "{{ env_var('AWS_REGION') }}"
       work_group: primary
