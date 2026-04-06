@@ -4,7 +4,7 @@ isaac_analytics:
     prod:
       type: athena
       # Glue Data Catalog database provisioned natively by Terraform
-      database: isaac_gold
+      database: awsdatacatalog
       schema: isaac_gold
       # Physical S3 boundary where analytical parquet entities reside
       s3_data_dir: "s3://{{ env_var('GOLD_BUCKET_NAME') }}/curated_models/"

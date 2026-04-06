@@ -3,7 +3,8 @@ version: 2
 sources:
   - name: isaac_silver
     description: "Medallion Silver Layer - Optimized Parquet Olist Tables processed by PySpark."
-    database: isaac_silver
+    database: awsdatacatalog
+    schema: isaac_silver
     tables:
       - name: olist_orders_dataset
       - name: olist_order_items_dataset
